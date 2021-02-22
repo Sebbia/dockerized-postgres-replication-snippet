@@ -1,0 +1,10 @@
+FROM postgres:10.5-alpine
+
+COPY postgres/gosu-amd64 /usr/local/bin/gosu
+
+RUN apk add --update iputils && chmod +x /usr/local/bin/gosu
+
+COPY postgres/entrypoint-replica.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["gosu", "postgres", "postgres"]

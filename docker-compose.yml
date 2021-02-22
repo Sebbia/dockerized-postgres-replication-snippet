@@ -1,0 +1,21 @@
+version: "3"
+services: 
+  db:
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    environment:
+      - DATABASES=db1,db2
+      - PG_REP_USER=${PG_REP_USER}
+      - PG_REP_PASSWORD=${PG_REP_PASSWORD}
+
+  db_repl:
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile-replica
+    depends_on:
+      - db
+    environment:
+      - PG_REP_USER=${PG_REP_USER}
+      - PG_REP_PASSWORD=${PG_REP_PASSWORD}
+    
